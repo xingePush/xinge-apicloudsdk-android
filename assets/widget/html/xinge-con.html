@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0">
+    <title>APICloud</title>
+    <link rel="stylesheet" type="text/css" href="../css/base.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css" />
+    <script type="text/javascript">
+
+		var tencentPush = null;
+		apiready = function(){
+	    	tencentPush = api.require('tencentPush');
+	    }
+	    
+		function config(){
+			//var tencentPush = api.require('tencentPush');
+			var param = {debug:true};
+	        tencentPush.config(param);
+		}
+		
+		function registerPush(){
+			//var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				if(ret.status){
+					alert("注册成功，token为："+ret.token);
+				}else{
+					alert("注册失败，错误码："+err.code+"，错误信息："+err.msg);
+				}
+			}
+			// 需要绑定的账号，若为"*"表示解除之前的账号绑定
+			var params = {account:"ApiCloudTestAccount"};	
+	        tencentPush.registerPush(params, resultCallback);
+		}
+		
+		function unregisterPush(){
+			//var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				if(ret.status){
+					alert("反注册成功");
+				}else{
+					alert("反注册失败，错误码："+err.code+"，错误信息："+err.msg);
+				}
+			}
+	        tencentPush.unregisterPush(resultCallback);
+		}
+		
+		function setTag(){
+			//var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				if(ret.status){
+					alert("标签设置成功，标签名："+ret.tag);
+				}else{
+					alert("标签设置失败，错误码："+err.code+"，错误信息："+err.msg);
+				}
+			}
+			var param = {tag:"tagName"};
+	        tencentPush.setTag(param, resultCallback);
+		}
+		
+		function delTag(){
+			//var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				if(ret.status){
+					alert("标签删除成功，标签名："+ret.tag);
+				}else{
+					alert("标签删除失败，错误码："+err.code+"，错误信息："+err.msg);
+				}
+			}
+			var param = {tag:"tagName"};
+	        tencentPush.delTag(param, resultCallback);
+		}
+		
+		function addlocalNotification(){
+			//var tencentPush = api.require('tencentPush');
+			var params = {
+				title : "title", // 标题
+				content : "test content",  // 内容
+				date : "20180504",  // 日期
+				hour : "17",  // 时间
+				min	: "43",   // 分钟
+				customContent : "{\"key\":\"value\"}",  // 自定义key-value
+				activity : "",  // 打开的activity
+				ring : 1,       // 是否响铃
+				vibrate : 1,    // 是否振动
+				};
+			var resultCallback = function(ret, err){
+				if(ret.status){
+					alert("添加通知成功，通知id："+ret.notiId);
+				}else{
+					alert("添加本地通知失败，错误码："+err.code+"，错误信息："+err.msg);
+				}
+			}
+	        tencentPush.addlocalNotification(params, resultCallback);
+		}
+		
+		function clearLocalNotifications(){
+			//var tencentPush = api.require('tencentPush');
+			tencentPush.clearLocalNotifications();
+		}
+		
+		function onTextMessage(){
+			var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				alert("收到透传消息，title："+ret.title+"，content："+ret.content+"，customContent："+ret.customContent);
+			}
+			var params = {name:"message"};	
+			tencentPush.setListener(params, resultCallback);
+		}
+
+		function onNotifactionClick(){
+			var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				alert("收到通知被点击的回调，title："+ret.title+"，content："+ret.content+"，customContent："+ret.customContent 
+				+ ",activity:"+ret.activity+",actionType:"+ret.actionType+",msgid:"+ret.msgid);
+			}
+			var params = {name:"notifactionClick"};	
+			tencentPush.setListener(params, resultCallback);
+		}
+		
+		function onNotifactionClear(){
+			var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				alert("收到通知被清除的回调，title："+ret.title+"，content："+ret.content+"，customContent："+ret.customContent 
+				+ ",activity:"+ret.activity+",actionType:"+ret.actionType+",msgid:"+ret.msgid);
+			}
+			var params = {name:"notifactionClear"};	
+			tencentPush.setListener(params, resultCallback);
+		}
+		
+		function onNotifactionShow(){
+			var tencentPush = api.require('tencentPush');
+			var resultCallback = function(ret, err){
+				alert("收到通知被展示的回调，title："+ret.title+"，content："+ret.content+"，customContent："+ret.customContent 
+				+ ",activity:"+ret.activity+",actionType:"+ret.actionType+",msgid:"+ret.msgid);
+			}
+			var params = {name:"notifactionShow"};	
+			tencentPush.setListener(params, resultCallback);
+		}		
+		
+		function cancelNotifaction(){
+			var tencentPush = api.require('tencentPush');
+			var params = {nid: -1};	
+			tencentPush.cancelNotifaction(params);
+		}
+    
+	</script>
+</head>
+<body>
+    <div id="wrap">
+        <div id="main"> 
+            <div  >
+            	<input type="button" onclick="config()" value="开启debug" /><br><br>
+            	<input type="button" onclick="registerPush()" value="注册设备" /><br><br>
+            	<input type="button" onclick="unregisterPush()" value="反注册（不需要再接收通知）" /><br><br>
+            	<input type="button" onclick="onTextMessage()" value="设置消息透传的回调" /><br><br>
+            	<input type="button" onclick="onNotifactionShow()" value="通知被展示的回调" /><br><br>
+            	<input type="button" onclick="onNotifactionClick()" value="通知被点击的回调" /><br><br>
+            	<input type="button" onclick="onNotifactionClear()" value="通知被清除的回调" /><br><br>
+            	<input type="button" onclick="setTag()" value="设置标签" /><br><br>
+            	<input type="button" onclick="delTag()" value="删除标签" /><br><br>
+            	<input type="button" onclick="addlocalNotification()" value="添加本地通知" /><br><br>
+            	<input type="button" onclick="clearLocalNotifications()" value="清除所有本地通知" /><br><br>
+            	<input type="button" onclick="cancelNotifaction()" value="清除所有展示的通知" /><br><br>
+            </div>
+
+        </div>   
+    </div>
+</body>
+</html>

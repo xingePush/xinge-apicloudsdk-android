@@ -1,0 +1,19 @@
+<widget id="A6976395255298"  version="0.0.1">
+    <name>APICloud</name>
+    <description>
+        a sample APICloud app.
+    </description>
+    <author email="developer@apicloud.com" href="http://www.apicloud.com">
+        developer
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="bounces" value="true" />
+</widget>
+
+
+
+<feature name="tencentPush">
+	<param name="android_accessId" value="2100081258" />
+	<param name="android_accessKey" value="AY8SC8Q131IL" />
+</feature>

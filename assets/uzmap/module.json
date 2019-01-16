@@ -1,0 +1,8 @@
+{
+	modules:[
+		{
+		    name:'tencentPush',
+		    class:'com.apicloud.moduleTencentPush.XGPush'
+		}
+	]
+}

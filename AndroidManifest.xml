@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.apicloud.pkg.any"
+    android:versionCode="1"
+    android:versionName="1.0.5" >
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="19" />
+    
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+    
+    <!-- 访问网络  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 写外部存储  -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 进行网络定位  -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 访问wifi网络信息,wifi信息可用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取wifi的获取权限,wifi信息可用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 唤醒CPU -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 控制振动器-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 使用摄像头-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 直接拨打电话-->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 直接发送短信-->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 读取手机通讯录-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 写入手机通讯录-->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+    <!-- 录音-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 闪光灯-->
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <!-- 读取低级别的系统日志文件-->
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <!-- 开机启动-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 蓝牙账户-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!-- 蓝牙-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- 调用系统下载功能-->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <!-- 手机必要要有照相机 且能自动对焦-->
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    
+    
+    <!-- 信鸽额外权限-->
+    <!-- 读写全局空间-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 手机开锁-->
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    
+    <application android:name="com.uzmap.pkg.uzapp.UZApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/uz_icon"
+        android:label="@string/app_name"
+		android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
+        <meta-data android:name="uz_version" android:value="1.0.5" />
+        <activity
+            android:name="com.uzmap.pkg.EntranceActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme"
+        	android:screenOrientation="portrait"
+        	android:configChanges="orientation|locale" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+ 
+        <!-- 【注意】 如果被打开的activity是启动模式为SingleTop，SingleTask或SingleInstance，请根据通知的异常自查列表第8点处理 -->
+        <activity
+            android:name="com.tencent.android.tpush.XGPushActivity"
+            android:exported="false" >
+            <intent-filter>
+
+                <!-- 若使用AndroidStudio，请设置android:name="android.intent.action" -->
+                <action android:name="android.intent.action" />
+            </intent-filter>
+        </activity>
+        <!-- push服务广播 -->
+       <!-- 【必须】 信鸽receiver广播接收 -->
+        <receiver
+            android:name="com.tencent.android.tpush.XGPushReceiver"
+            android:process=":xg_service_v3" >
+            <intent-filter android:priority="0x7fffffff" >
+
+                <!-- 【必须】 信鸽SDK的内部广播 -->
+                <action android:name="com.tencent.android.tpush.action.SDK" />
+                <action android:name="com.tencent.android.tpush.action.INTERNAL_PUSH_MESSAGE" />
+                <!-- 【必须】 系统广播：网络切换 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
+                <!-- 【可选】 系统广播：开屏 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+
+                <!-- 【可选】 一些常用的系统广播，增强信鸽service的复活机会，请根据需要选择。当然，你也可以添加APP自定义的一些广播让启动service -->
+                <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+            <!-- 【可选】 usb相关的系统广播，增强信鸽service的复活机会，请根据需要添加 -->
+            <intent-filter android:priority="0x7fffffff" >
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+                <action android:name="android.intent.action.MEDIA_REMOVED" />
+                <action android:name="android.intent.action.MEDIA_CHECKING" />
+                <action android:name="android.intent.action.MEDIA_EJECT" />
+
+                <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 【必须】 通知service，此选项有助于提高抵达率 -->
+        <service
+            android:name="com.tencent.android.tpush.rpc.XGRemoteService"
+            android:exported="true" >
+            <intent-filter>
+                <!-- 【必须】 请修改为当前APP包名.PUSH_ACTION-->
+                <action android:name="com.apicloud.pkg.any.PUSH_ACTION" />
+            </intent-filter>
+        </service>
+
+        <!-- 【必须】 信鸽service -->
+        <service
+            android:name="com.tencent.android.tpush.service.XGPushServiceV3"
+            android:exported="true"
+            android:persistent="true"
+            android:process=":xg_service_v3" />
+        
+        <!-- 【必须】 增强xg_service存活率 -->
+        <service
+            android:name="com.tencent.android.tpush.service.XGDaemonService"
+            android:process=":xg_service_v3" />
+
+
+          <!-- APP实现的Receiver，用于接收消息和结果反馈 -->
+         <receiver android:name="com.apicloud.moduleTencentPush.XGCustomPushReceiver" > 
+           <intent-filter> 
+                <!-- 接收消息透传 -->
+              <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" /> 
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+               <action android:name="com.tencent.android.tpush.action.FEEDBACK" /> 
+           </intent-filter> 
+         </receiver> 
+         
+          <!-- 【必须】 【注意】authorities修改为 包名.AUTH_XGPUSH, 如demo的包名为： -->
+        <provider
+            android:name="com.tencent.android.tpush.XGPushProvider"
+            android:authorities="com.apicloud.pkg.any.AUTH_XGPUSH"
+            android:exported="true" />
+
+        <!-- 【必须】 【注意】authorities修改为 包名.TPUSH_PROVIDER, 如demo的包名为： -->
+        <provider
+            android:name="com.tencent.android.tpush.SettingsContentProvider"
+            android:authorities="com.apicloud.pkg.any.TPUSH_PROVIDER"
+            android:exported="false" />
+
+        <!-- 【必须】 【注意】authorities修改为 包名.TENCENT.MID.V3, 如demo的包名为： -->
+        <provider
+            android:name="com.tencent.mid.api.MidProvider"
+            android:authorities="com.apicloud.pkg.any.TENCENT.MID.V3"
+            android:exported="true" >
+        </provider>
+         
+    </application>
+
+</manifest>
