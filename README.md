@@ -6,7 +6,7 @@
 
 # APICloud模块开发说明
 
-本工程是基于Eclipse开发的，请先了解APICloud的模块开发流程，参见APICloud的[模块开发指南_Android_Eclipse](https://docs.apicloud.com/Module-Dev/module-dev-guide-for-android#resoure9)
+本工程是基于Eclipse开发的，请先了解APICloud的模块开发流程，参见APICloud的[模块开发指南_Android_Eclipse](https://docs.apicloud.com/Module-Dev/module-dev-guide-for-android)
 
 ## src目录
 信鸽tencentPush模块的java源码，最终编译成tencentPush.jar
